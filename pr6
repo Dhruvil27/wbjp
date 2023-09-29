@@ -1,0 +1,121 @@
+PRACTICAL-6
+INDEX.HTML
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Practical Work</title>
+</head>
+<body>
+<form action="firstservlet">
+WRITE <input type="text" name="word" value="I am calling first servlet"/>
+<button type="submit" name="calculate">Call First Servlet </button><br/>
+</form>
+</body>
+</html>
+
+
+
+_______________________________________
+
+firstservlet.java(servlet file)
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ *
+ * @author Acer
+ */
+public class firstservlet extends HttpServlet {
+    @Override
+    public void service(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException
+{
+String word = request.getParameter("word") ;
+PrintWriter output = response.getWriter();
+
+String word1 = word+".\n Now, It is calling second servlet";
+// Dispatching it to second servlet
+//A RequestDispatcher object can be used to forward a request to the resource or to include the resource in a response. The resource can be dynamic or static.
+RequestDispatcher redirecting = request.getRequestDispatcher("secondservlet");
+request.setAttribute("passingWord", word1);
+redirecting.forward(request, response);
+}
+
+}
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+   
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    
+________________________________________
+
+secondservlet.java
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ *
+ * @author Acer
+ */
+public class secondservlet extends HttpServlet {
+    @Override
+    public void service(HttpServletRequest request,HttpServletResponse response) throws IOException
+{
+String word = (String) request.getAttribute("passingWord");
+PrintWriter output = response.getWriter();
+output.println(word);
+
+}
+}
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+   
